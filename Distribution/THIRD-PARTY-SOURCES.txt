@@ -1,0 +1,26 @@
+AlterEgo Audio Workshop 1.0.0 - third-party components
+
+FFmpeg 8.1.1-essentials_build-www.gyan.dev, GPL version 3
+Binary provider: https://www.gyan.dev/ffmpeg/builds/
+Corresponding FFmpeg revision: https://github.com/FFmpeg/FFmpeg/commit/239f2c733d
+Source archive: https://github.com/FFmpeg/FFmpeg/archive/239f2c733d.zip
+Build configuration and external-library references: license/ffmpeg/README.txt
+Full license: license/ffmpeg/LICENSE
+FFmpeg is executed as a separate program; it is not linked into the Workshop.
+
+vgmstream Windows x64 nightly, retrieved 2026-10-13
+Source: https://github.com/vgmstream/vgmstream
+License and component references: license/vgmstream/COPYING and README.md
+
+NeFS Edit/NefsLib 0.7.1 and dependencies
+Source: https://github.com/victorbush/ego.nefsedit
+MIT license texts and component notice: license/nefs/
+
+.NET 9 runtime and WPF
+Source: https://github.com/dotnet/runtime and https://github.com/dotnet/wpf
+Microsoft MIT license and third-party notices accompany the release.
+
+Bundled tools are extracted by the .NET single-file runtime when needed.
+License notices remain in license/ beside the distributed executable.
+
+No game audio, game banks or game assets are distributed with this release.

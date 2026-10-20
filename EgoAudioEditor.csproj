@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows10.0.17763.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <GeneratedMSBuildEditorConfigFile>$(MSBuildProjectDirectory)\obj\g.editorconfig</GeneratedMSBuildEditorConfigFile>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+    <Product>Ego Audio Editor</Product>
+    <Description>F1 25 audio preview, export and replacement</Description>
+    <PortableRelease Condition="'$(PublishProfile)' == 'Portable'">true</PortableRelease>
+    <ApplicationIcon>audioeditoricon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <Import Project="NefsDependencies.props" Condition="Exists('NefsDependencies.props')" />
+  <ItemGroup>
+    <Content Include="vendor\vgmstream\**\*" Exclude="vendor\vgmstream\**\*.txt;vendor\vgmstream\**\*.md;vendor\vgmstream\**\COPYING*;vendor\vgmstream\**\LICENSE*;vendor\vgmstream\**\NOTICE*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <TargetPath>vendor\vgmstream\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+    </Content>
+
+    <Content Include="vendor\ffmpeg\**\*" Exclude="vendor\ffmpeg\**\*.txt;vendor\ffmpeg\**\*.md;vendor\ffmpeg\**\COPYING*;vendor\ffmpeg\**\LICENSE*;vendor\ffmpeg\**\NOTICE*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <TargetPath>vendor\ffmpeg\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+    </Content>
+
+    <Content Include="Distribution\**\*.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <TargetPath>license\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="audioeditoricon.ico" />
+    <Content Include="Distribution\README.md" />
+  </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Images\JonnieDesignsNoBG.png" />
+        <Resource Include="Images\Background_Branding_26.png" />
+        <Resource Include="Images\ToolName.png" />
+    </ItemGroup>
+<ItemGroup>
+    <Content Include="vendor\ffmpeg\*.txt;vendor\ffmpeg\*.md;vendor\ffmpeg\LICENSE*;vendor\ffmpeg\COPYING*;vendor\ffmpeg\NOTICE*">
+      <TargetPath>license\ffmpeg\%(Filename)%(Extension)</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Include="vendor\vgmstream\*.txt;vendor\vgmstream\*.md;vendor\vgmstream\LICENSE*;vendor\vgmstream\COPYING*;vendor\vgmstream\NOTICE*">
+      <TargetPath>license\vgmstream\%(Filename)%(Extension)</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+</Project>

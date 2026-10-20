@@ -1,0 +1,12 @@
+NeFS archive support uses VictorBush.Ego.NefsLib 0.7.1 from the user's installed
+NefsEdit 0.7.1 distribution. NeFS Edit is MIT licensed (LICENSE-NefsEdit.txt).
+Official source: https://github.com/victorbush/ego.nefsedit
+
+Bundled dependencies from that same distribution:
+- Microsoft.Extensions.Logging.Abstractions (Microsoft; MIT)
+- System.IO.Abstractions / TestableIO.System.IO.Abstractions / Wrappers
+  (TestableIO contributors; MIT)
+- Testably.Abstractions.FileSystem.Interface (Testably contributors; MIT)
+
+The DLLs are bundled to make archive support available without installation.
+No game data is included.

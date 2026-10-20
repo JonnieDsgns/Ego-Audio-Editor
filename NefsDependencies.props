@@ -1,0 +1,11 @@
+<Project>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)vendor/nefs/*.txt"><Link>license/nefs/%(Filename)%(Extension)</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory><CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory><ExcludeFromSingleFile>true</ExcludeFromSingleFile></Content>
+    <Reference Include="VictorBush.Ego.NefsLib"><HintPath>$(MSBuildThisFileDirectory)vendor/nefs/VictorBush.Ego.NefsLib.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions"><HintPath>$(MSBuildThisFileDirectory)vendor/nefs/Microsoft.Extensions.Logging.Abstractions.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="System.IO.Abstractions"><HintPath>$(MSBuildThisFileDirectory)vendor/nefs/System.IO.Abstractions.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="TestableIO.System.IO.Abstractions"><HintPath>$(MSBuildThisFileDirectory)vendor/nefs/TestableIO.System.IO.Abstractions.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="TestableIO.System.IO.Abstractions.Wrappers"><HintPath>$(MSBuildThisFileDirectory)vendor/nefs/TestableIO.System.IO.Abstractions.Wrappers.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Testably.Abstractions.FileSystem.Interface"><HintPath>$(MSBuildThisFileDirectory)vendor/nefs/Testably.Abstractions.FileSystem.Interface.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+</Project>

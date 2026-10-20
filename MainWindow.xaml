@@ -1,0 +1,149 @@
+<Window x:Class="RegularAudioTool.MainWindow" ThemeMode="Dark" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Ego Audio Editor" Width="1240" Height="800" MinWidth="940" MinHeight="600" Background="#1F1F1F" Foreground="#FCFCFC" WindowStyle="None" ResizeMode="CanResize">
+    <Window.Resources>
+        <Style x:Key="AudioSliderButton" TargetType="RepeatButton">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="RepeatButton"><Border Background="{TemplateBinding Background}" Height="4" CornerRadius="2"/></ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
+            <Setter Property="Template"><Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid MinHeight="20" Background="Transparent">
+                        <Track x:Name="PART_Track" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Value="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <Track.DecreaseRepeatButton><RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource AudioSliderButton}" Background="#B8FF16"/></Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton><RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource AudioSliderButton}" Background="#666666"/></Track.IncreaseRepeatButton>
+                            <Track.Thumb><Thumb Width="20" Height="20">
+                                <Thumb.Template><ControlTemplate TargetType="Thumb"><Grid><Ellipse Fill="#454545"/><Ellipse Fill="#B8FF16" Margin="5"/></Grid></ControlTemplate></Thumb.Template>
+                            </Thumb></Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value></Setter>
+        </Style>
+        <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+            <Setter Property="Foreground" Value="#FAFAFA"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="ToolTip" Value="{Binding Name}"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="DataGridCell"><Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter VerticalAlignment="Center"/></Border></ControlTemplate></Setter.Value></Setter>
+            <Style.Triggers><Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="#B8FF16"/><Setter Property="Foreground" Value="#101010"/></Trigger></Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" UseAeroCaptionButtons="False" CornerRadius="10"/>
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.Background>
+                <ImageBrush ImageSource="/Images/Background_Branding_26.png" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <StackPanel>
+                <Border Grid.Row="0" BorderBrush="Transparent">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#B21F1F1F"/>
+                            <GradientStop Color="#001F1F1F" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <DockPanel LastChildFill="True" HorizontalAlignment="Right">
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <Border Background="Transparent" BorderBrush="Transparent" Width="Auto" Height="44" MouseLeftButtonDown="TitleBar_DragMove"/>
+                            <Button Background="Transparent" BorderBrush="Transparent" FontFamily="Segoe Fluent Icons" Content="&#xE921;" FontSize="10" Width="44" Height="44" Foreground="#F2F2F2" Click="Minimize_Click"/>
+                            <Button Background="Transparent" BorderBrush="Transparent" FontFamily="Segoe Fluent Icons" Content="&#xE922;" FontSize="10" Width="44" Height="44" Foreground="#F2F2F2" Click="Maximize_Click"/>
+                            <Button Background="Transparent" BorderBrush="Transparent" FontFamily="Segoe Fluent Icons" Content="&#xE8BB;" FontSize="10" Width="44" Height="44" Foreground="#F2F2F2" Click="Close_Click"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+                <DockPanel Margin="24,0,24,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="/Images/ToolName.png" Height="60" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Image Source="/Images/JonnieDesignsNoBG.png" Height="30" HorizontalAlignment="Right" Cursor="Hand" MouseLeftButtonUp="Logo_Click"/>
+                </DockPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Margin="24" Background="#1F1F1F">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="OpenBar" Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,16">
+                <Button Content="Open File / Project" Click="OpenFile_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                <Button Content="Open Audio Folder" Click="OpenFolder_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                <Button Content="Export to Mod…" Click="Save_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                <Button Content="Choose FFmpeg…" Click="Ffmpeg_Click" ToolTip="For WAV re-import of compressed Wwise sounds" Foreground="#ECECEC"/>
+            </StackPanel>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="285"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Audio Files" Foreground="#AAAAAA" FontSize="13" Margin="0,0,0,8"/>
+                    <ListBox x:Name="Files" DisplayMemberPath="Label" SelectionChanged="Files_SelectionChanged" Padding="6" Background="#1A1A1A" Foreground="#FAFAFA">
+    <ListBox.ItemContainerStyle>
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Setter Property="Foreground" Value="#FAFAFA"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><Border x:Name="Surface" Background="Transparent" Padding="8"><ContentPresenter/></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="Background" Value="#303829"/></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Surface" Property="Background" Value="#435723"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+            <Style.Triggers><DataTrigger Binding="{Binding IsModified}" Value="True"><Setter Property="FontWeight" Value="Bold"/></DataTrigger></Style.Triggers>
+        </Style>
+    </ListBox.ItemContainerStyle>
+</ListBox>
+                </DockPanel>
+                <DockPanel Grid.Column="2">
+                    <TextBlock x:Name="DocumentTitle" DockPanel.Dock="Top" Text="Open .nfs-, .bnk- or .wem-Files" FontSize="13" Margin="0,0,0,10" TextTrimming="CharacterEllipsis" Foreground="#AAAAAA"/>
+                    <TextBox x:Name="Search" DockPanel.Dock="Top" TextChanged="Search_TextChanged" ToolTip="Search by Name, Media ID or Format" Margin="0,0,0,10"/>
+                    <TextBlock x:Name="Details" DockPanel.Dock="Bottom" Text="Select an entry for preview and replacement." FontSize="13" TextWrapping="Wrap" Foreground="#AAAAAA" Margin="0,12,0,0"/>
+                    <DataGrid x:Name="Sounds" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="Sounds_SelectionChanged" Background="#1A1A1A" Foreground="#FAFAFA" BorderThickness="0.5" BorderBrush="#292929" RowBackground="#1A1A1A" AlternatingRowBackground="#202020" GridLinesVisibility="None" HeadersVisibility="Column" RowHeight="32" EnableRowVirtualization="True">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                                <Style.Triggers><DataTrigger Binding="{Binding IsModified}" Value="True"><Setter Property="FontWeight" Value="Bold"/></DataTrigger></Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Sound name" Binding="{Binding DisplayName}" Width="*" MinWidth="240"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" MinWidth="100"/>
+                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="95" MinWidth="95"/>
+                            <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="95" MinWidth="95"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding State}" Width="115" MinWidth="115"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </Grid>
+            <Border Grid.Row="3" Background="#1F1F1F" Margin="0,24,0,24" CornerRadius="6">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Button Content="▶ Play" Click="Play_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                        <Button Content="Pause" Click="Pause_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                        <Button Content="Stop" Click="Stop_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                        <CheckBox x:Name="Loop" Content="Loop" Foreground="#ECECEC" VerticalAlignment="Center" Margin="8,0,16,0"/>
+                        <TextBlock Text="Volume" VerticalAlignment="Center" Foreground="#ECECEC"/>
+                        <Slider x:Name="Volume" Minimum="0" Maximum="1" Value="0.65" VerticalAlignment="Center"  Width="110" Margin="8,0" ValueChanged="Volume_Changed"/>
+                        <TextBlock x:Name="TimeLabel" Text="00:00 / 00:00" Foreground="#ECECEC" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Slider x:Name="Timeline" Minimum="0" Maximum="1" PreviewMouseLeftButtonUp="Timeline_Seek" VerticalAlignment="Center" Margin="0,0,0,12"/>
+                    <StackPanel x:Name="EditBar" Orientation="Horizontal">
+                        <Button Content="Export WAV…" Click="ExportWave_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                        <Button Content="Export Original Media…" Click="ExportMedia_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                        <Button Content="Replace Selected Sound…" Click="Replace_Click" Margin="0,0,8,0" Foreground="#ECECEC"/>
+                        <Button Content="Revert Changes" Click="Revert_Click" Foreground="#ECECEC"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <TextBlock Grid.Row="4" x:Name="Status" Text="Original files are preserved. Use 'Export to Mod' to create a ZIP for Simplified Launcher." TextWrapping="Wrap" FontSize="13" Foreground="#AAAAAA" Margin="0,4,0,4"/>
+        </Grid>
+        <Grid Grid.Row="2" Background="#282828"/>
+        <DockPanel Grid.Row="3">
+            <TextBlock x:Name="Disclaimer" Text="Disclaimer: AI was used in the creation of this tool" TextWrapping="Wrap" FontSize="12" Foreground="#555555" Margin="24,12,24,12"/>
+            <TextBlock x:Name="Info" Text="Version 1.1.2  |  Created by JonnieDesigns" DockPanel.Dock="Right" HorizontalAlignment="Right" FontSize="12" Foreground="#555555" Margin="24,12,24,12"/>
+        </DockPanel>
+    </Grid>
+</Window>

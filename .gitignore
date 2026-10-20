@@ -1,0 +1,12 @@
+bin/
+obj/
+publish/
+publish-*/
+.vs/
+*.user
+*.suo
+*.binlog
+.nuget/
+*.egoengineaudio
+*.egoaudio
+artifacts/

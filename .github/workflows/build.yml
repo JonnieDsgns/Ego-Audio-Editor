@@ -1,0 +1,17 @@
+name: Build Windows release
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - run: dotnet publish EgoAudioEditor.csproj -p:PublishProfile=SingleExe -o artifacts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: EgoAudioEditor-win-x64
+          path: artifacts/

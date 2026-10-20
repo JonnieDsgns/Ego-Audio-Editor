@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <StandaloneRuntimeTag Condition="'$(RuntimeIdentifier)' == ''">any</StandaloneRuntimeTag>
+    <StandaloneRuntimeTag Condition="'$(RuntimeIdentifier)' != ''">x64</StandaloneRuntimeTag>
+    <IntermediateOutputPath>obj\b\$(Configuration)\$(StandaloneRuntimeTag)\</IntermediateOutputPath>
+    <TargetRefPath>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)ref\$(TargetFileName)</TargetRefPath>
+  </PropertyGroup>
+  <Target Name="EnsureEditorConfigDirectory" BeforeTargets="GenerateMSBuildEditorConfigFile">
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(GeneratedMSBuildEditorConfigFile)'))" />
+  </Target>
+</Project>
